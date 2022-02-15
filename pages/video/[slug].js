@@ -1,4 +1,5 @@
 import { gql, GraphQLClient } from 'graphql-request';
+import Link from 'next/link';
 
 export const getServerSideProps = async (pageContext) => {
 
@@ -56,9 +57,15 @@ const Video = ({video}) => {
   console.log(video)
 
   return (
-    <div>
-      <h1>Video</h1>
-    </div>
+    <>
+     <img className='video-image' src={video.thumbnails.url} alt={video.title} />
+     <div className='video-info'>
+      <p>{video.tags.join(', ')}</p>
+      <p>{video.description}</p>
+      <Link href="/"><p>go back</p></Link>
+      <button>Play</button>
+     </div>
+    </>
   );
 }
 
