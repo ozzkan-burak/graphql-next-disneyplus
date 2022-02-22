@@ -1,6 +1,8 @@
 import { gql, GraphQLClient } from 'graphql-request';
 import Navbar from '../components/Navbar';
 import Section from '../components/Section';
+import { filterVideos } from '../utils/filterVideos';
+import { unseeVideos } from '../utils/unseeVideos';
 
 export const getStaticProps = async () => {
 
@@ -14,23 +16,23 @@ export const getStaticProps = async () => {
   });
 
   const query = gql`
-query {
-  videos {
-    createdAt,
-    id,
-    title,
-    description,
-    seen,
-    slug,
-    tags,
-    thumbnails {
-      url
-    },
-    mp4 {
-      url
+  query {
+    videos {
+      createdAt,
+      id,
+      title,
+      description,
+      seen,
+      slug,
+      tags,
+      thumbnails {
+        url
+      },
+      mp4 {
+        url
+      }
     }
   }
-}
 `
 
   const data = await graphQLClient.request(query);
@@ -52,14 +54,6 @@ const Home = ({ videos }) => {
   const randomVideo = (videos) => {
     return videos[Math.floor(Math.random() * videos.length)]
   };
-
-  const filterVideos = (videos, genre) => {
-    return videos.filter(video => video.tags.includes(genre))
-  };
-
-  const unseeVideos = (videos) => {
-    return videos.filter(video => video.seen == false || video.seen == null);
-  }
 
   return (
     <>
