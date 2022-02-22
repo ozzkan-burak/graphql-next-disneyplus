@@ -59,19 +59,22 @@ const Video = ({ video }) => {
 
   return (
     <>
-      <img className='video-image' src={video.thumbnails.url} alt={video.title} />
-      <div className='video-info'>
+      {!watching && <img className='video-image' src={video.thumbnails.url} alt={video.title} />}
+      {!watching && <div className='video-info'>
         <p>{video.tags.join(', ')}</p>
         <p>{video.description}</p>
         <Link href="/"><p>go back</p></Link>
         <button 
           className="video-overlay" 
-          onClick={()=> wathching ? setWathching(prevState => prevState = false) : setWathching(prevState => prevState = true)}
+          onClick={()=> watching ? setWathching(prevState => prevState = false) : setWathching(prevState => prevState = true)}
           >Play</button>
-      </div>
-      <video width= "100%" controls>
+      </div>}
+      {watching && <video width= "100%" height="100%" controls>
         <source src={video.mp4.url} type="video/mp4" />
-      </video>
+      </video>}
+      <div className="info-footer" onClick={()=> watching ? setWathching(false) : null}>
+        
+      </div>
     </>
   );
 }
